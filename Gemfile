@@ -44,6 +44,7 @@ group :test do
 end
 
 group :production do
+  gem 'mailgun-ruby', '1.3.10'
   gem 'pg', '1.3.5'
 end
 
