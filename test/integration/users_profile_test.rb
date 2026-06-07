@@ -22,4 +22,21 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
       assert_match micropost.content, response.body
     end
   end
+
+  test 'profile page should display following/followers counts' do
+    get user_path(@user)
+    assert_select 'a[href=?]', following_user_path(@user),
+                  text: "#{@user.following.count} following"
+    assert_select 'a[href=?]', followers_user_path(@user),
+                  text: "#{@user.followers.count} followers"
+  end
+
+  test 'home page should display following/followers counts' do
+    log_in_as(@user)
+    get root_path
+    assert_select 'a[href=?]', following_user_path(@user),
+                  text: "#{@user.following.count} following"
+    assert_select 'a[href=?]', followers_user_path(@user),
+                  text: "#{@user.followers.count} followers"
+  end
 end
